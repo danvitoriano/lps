@@ -1,0 +1,61 @@
+@using WebGrease.Css.Extensions
+@model List<Dictionary<string, string>>
+
+@{
+    Layout = null;
+
+}
+
+@{
+
+    var phone = string.Empty;
+    var ownerTelephoneType = string.Empty;
+
+    Model.SelectMany(k => k.Keys).ForEach(key => ownerTelephoneType += string.Format(" {0}</br>", key));
+    Model.SelectMany(k => k.Values).ForEach(value => phone += string.Format("<a id='broker-phone-number' href='tel:{0}'>{0}</a></br>", value));
+    
+}
+
+
+<div id="phoneNumberContactBarContainer" itemprop="telephone" class="button-header-container">
+    <div class="row collapse hide-for-small-only">
+        <!-- owner type -->
+        @if (@Model.Count > 1)
+        {
+            <div id="_ownerTelephoneType" class="text-right inline-block">
+                @Html.Raw(ownerTelephoneType)
+            </div>
+        }
+
+        <div id="_mainPhoneNumber" class="font-semibold primary-color inline-block text-left">
+            @Html.Raw(phone)
+        </div>
+    </div>
+</div>
+
+<!-- phone dropdown only for small -->
+<ul id="phone-small-dropdown" data-dropdown-content class="f-dropdown">
+    
+    <div id="option-phone-1" class="row collapse text-center">
+        <div id="option-text-phone-call" class="font-light">Clique para ligar:</div>
+            
+        <!-- owner type -->
+        <div id="_ownerTelephoneType" class="text-right inline-block">
+            <!-- owner type -->
+            @if (@Model.Count > 1)
+            {
+                <div id="_ownerTelephoneType" class="text-right inline-block">
+                    @Html.Raw(ownerTelephoneType)
+                </div>
+            }
+        </div>
+        <!-- end owner type -->
+        
+        <div id="_mainPhoneNumber" class="font-semibold primary-color inline-block text-left medium-text">
+            @Html.Raw(phone)
+        </div>
+
+    </div>
+</ul>            
+<!-- end phone dropdown only for small -->
+
